@@ -1,31 +1,49 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Alert, View, ScrollView, StyleSheet, Text, TouchableOpacity, TextInput, TouchableHighlightBase } from 'react-native';
 import { ProfileCard } from '../components/ProfileCard';
+import { NumericInput } from '../components/NumericInput';
 
 
 export default class DonationScreen extends React.Component {
+
   static navigationOptions = {
     title: 'Profile',
   };
 
+  _sendMoney = () => {
+    Alert.alert(
+      'Money were sent',
+      'Thank you for your kind gesture!',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      {cancelable: false},
+      )
+
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
-        <ProfileCard/>
-        <TouchableOpacity style={styles.button}>
-            <Text> Send money </Text>
+        <ProfileCard />
+        <View>
+          <NumericInput />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={this._sendMoney}>
+          <Text style={styles.text}> Donate money </Text>
         </TouchableOpacity>
       </ScrollView>
     );
   }
 }
 
+
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#71C4E8',
-    width: 170,
-    height: 30,
-    marginTop: 200,
+    backgroundColor: '#c9efe6',
+    width: 230,
+    height: 40,
+    marginTop: 45,
     alignSelf: 'center',
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
@@ -34,9 +52,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  text: {
+    fontSize: 17
+  },
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9fffd',
   },
 });
+

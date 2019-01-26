@@ -11,7 +11,7 @@ export class ProfileCard extends React.Component {
     render() {
         return (
             <View>
-                <Card title='John Doe'>
+                <Card style={styles.card} title='John Doe'>
                     <View  style={styles.avatar}>
                         <Avatar
                             size="xlarge"
@@ -20,7 +20,7 @@ export class ProfileCard extends React.Component {
                             onPress={() => console.log("Works!")}
                             activeOpacity={0.7}
                             containerStyle={{ flex: 5, alignContent: 'center' }} />
-                        <Text style={styles.info}> Here is my bio </Text>
+                        <Text style={styles.info}> Description: Lost home in fire </Text>
                     </View>
                 </Card>
             </View >
@@ -29,7 +29,11 @@ export class ProfileCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    card: {
+        borderColor: '#c9efe6',
+    },
     avatar: {
+        borderColor: '#c9efe6',
         justifyContent: 'center',
         alignItems: 'center',
     },
