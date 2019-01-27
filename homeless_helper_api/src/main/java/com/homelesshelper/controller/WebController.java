@@ -124,11 +124,9 @@ public class WebController {
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getCashierReceiverInfo", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getCashierReceiverInfo/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getCashierReceiverInfo(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getCashierReceiverInfo(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -143,11 +141,9 @@ public class WebController {
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getBasicReceiverInfo", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getBasicReceiverInfo/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getBasicReceiverInfo(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getBasicReceiverInfo(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -235,11 +231,9 @@ public class WebController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getDonatorStats", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getDonatorStats/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getDonatorStats(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long donatorId = object.getLong("donator_id");
+    public ResponseEntity getDonatorStats(@PathVariable(value = "id") Long donatorId) {
 
         Donator donator = donatorService.findBy(donatorId);
         List<Donation> donations = donator.getDonations();
