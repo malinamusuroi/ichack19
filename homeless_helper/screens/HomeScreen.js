@@ -15,15 +15,16 @@ export default class HomeScreen extends React.Component {
      qrCodeScanner: false
    }
   _handlePressUrl = () => {
-     this.setState({qrCodeScanner: true});
+    this.setState({qrCodeScanner: true});
   };
 
   scanrQRcode() {
-    if(this.state.qrCodeScanner) return <QRCodeScanner />
+    if(this.state.qrCodeScanner) return <QRCodeScanner navigation={this.props.navigation}/>
     else return
   }
   
   render() {
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
