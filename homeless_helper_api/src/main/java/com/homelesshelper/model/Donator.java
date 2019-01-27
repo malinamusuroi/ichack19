@@ -28,11 +28,11 @@ public class Donator {
         donations = new ArrayList<>();
     }
 
-    public Donator(@NotNull String name, @NotNull String email, @NotNull String password, List<Donation> donations) {
+    public Donator(@NotNull String name, @NotNull String email, @NotNull String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.donations = donations;
+        this.donations = new ArrayList<>();
     }
 
     public Long getId() {
@@ -73,6 +73,10 @@ public class Donator {
 
     public void setDonations(List<Donation> donations) {
         this.donations = donations;
+    }
+
+    public void addDonation(Donation donation) {
+        donations.add(donation);
     }
 }
 

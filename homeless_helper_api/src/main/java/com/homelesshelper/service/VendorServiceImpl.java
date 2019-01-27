@@ -25,4 +25,10 @@ public class VendorServiceImpl implements VendorService {
         vendorRepository.findAll().forEach(r -> vendors.add(r));
         return vendors;
     }
+
+    @Override
+    public Vendor findBy(Long id) {
+        Vendor vendor = vendorRepository.findById(id).orElse(null);
+        return vendor;
+    }
 }

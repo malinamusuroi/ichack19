@@ -3,6 +3,7 @@ package com.homelesshelper.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 
@@ -31,9 +32,9 @@ public class Donation {
 
     public Donation() {}
 
-    public Donation(@NotNull Float amount, @NotNull Long timeStamp, @NotNull Donator donator, @NotNull Receiver receiver) {
+    public Donation(@NotNull Float amount, @NotNull Donator donator, @NotNull Receiver receiver) {
         this.amount = amount;
-        this.timeStamp = timeStamp;
+        this.timeStamp = Instant.now().getEpochSecond();
         this.donator = donator;
         this.receiver = receiver;
     }

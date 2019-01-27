@@ -1,10 +1,8 @@
 package com.homelesshelper.controller;
 
 import com.google.gson.Gson;
-import com.homelesshelper.model.Receiver;
-import com.homelesshelper.model.Vendor;
-import com.homelesshelper.service.ReceiverService;
-import com.homelesshelper.service.VendorService;
+import com.homelesshelper.model.*;
+import com.homelesshelper.service.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,15 @@ public class WebController {
     @Autowired
     VendorService vendorService;
 
+    @Autowired
+    TransactionService transactionService;
+
+    @Autowired
+    DonatorService donatorService;
+
+    @Autowired
+    DonationService donationService;
+
     @RequestMapping(value="/registerReceiver", method=RequestMethod.POST, consumes="application/json")
     @ResponseBody
     public ResponseEntity registerReceiver(@RequestBody String json) {
@@ -45,7 +52,7 @@ public class WebController {
     @ResponseBody
     public ResponseEntity updateReceiver(@RequestBody String json) {
         JSONObject object = new JSONObject(json);
-        Long id = object.getLong("id");
+        Long id = object.getLong("receiver_id");
         String summary = object.getString("summary");
 
         Boolean success = receiverService.update(id, summary);
@@ -85,17 +92,39 @@ public class WebController {
     @ResponseBody
     public ResponseEntity getFullReceiverInfoAndHistory(@RequestBody String json) {
         JSONObject object = new JSONObject(json);
-        Long id = object.getLong("id");
+        Long id = object.getLong("receiver_id");
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String receiversJson = new Gson().toJson(receiver);
-        JSONObject obj = new JSONObject(receiversJson);
+        JSONObject obj = new JSONObject();
+        obj.put("id", receiver.getId());
+        obj.put("name", receiver.getName());
         obj.put("dob", receiver.getPrettyDateOfBirth());
-        obj.remove("dateOfBirth");
+        obj.put("summary", receiver.getSummary());
+        obj.put("balance", receiver.getBalance());
+
+        JSONArray transactions = new JSONArray();
+        receiver.getTransactions().forEach(t -> {
+            JSONObject transaction = new JSONObject();
+            transaction.put("amount", t.getAmount());
+            transaction.put("description", t.getDescription());
+            transaction.put("timestamp", t.getPrettyTimeStamp());
+            transactions.put(transaction);
+        });
+        obj.put("transactions", transactions);
+
+        JSONArray donations = new JSONArray();
+        receiver.getDonations().forEach(d -> {
+            JSONObject donation = new JSONObject();
+            donation.put("amount", d.getAmount());
+            donation.put("timestamp", d.getPrettyTimeStamp());
+            donation.put("donator", d.getDonator().getName());
+            donations.put(donation);
+        });
+        obj.put("donations", donations);
 
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
@@ -104,7 +133,7 @@ public class WebController {
     @ResponseBody
     public ResponseEntity getCashierReceiverInfo(@RequestBody String json) {
         JSONObject object = new JSONObject(json);
-        Long id = object.getLong("id");
+        Long id = object.getLong("receiver_id");
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -115,6 +144,24 @@ public class WebController {
         obj.put("name", receiver.getName());
         obj.put("dob", receiver.getPrettyDateOfBirth());
         obj.put("balance", receiver.getBalance());
+
+        return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/getBasicReceiverInfo", method=RequestMethod.POST, consumes="application/json")
+    @ResponseBody
+    public ResponseEntity getBasicReceiverInfo(@RequestBody String json) {
+        JSONObject object = new JSONObject(json);
+        Long id = object.getLong("receiver_id");
+
+        Receiver receiver = receiverService.findBy(id);
+        if (receiver == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        JSONObject obj = new JSONObject();
+        obj.put("name", receiver.getName());
+        obj.put("summary", receiver.getSummary());
 
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
@@ -132,4 +179,95 @@ public class WebController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @RequestMapping(value="/makeTransaction", method=RequestMethod.POST, consumes="application/json")
+    @ResponseBody
+    public ResponseEntity makeTransaction(@RequestBody String json) {
+        JSONObject object = new JSONObject(json);
+        Float amount = object.getFloat("amount");
+        String description = object.getString("description");
+        Long vendorId = object.getLong("vendor_id");
+        Long receiverId = object.getLong("receiver_id");
+
+        Vendor vendor = vendorService.findBy(vendorId);
+        Receiver receiver = receiverService.findBy(receiverId);
+
+        Transaction transaction = new Transaction(amount, description, vendor, receiver);
+        vendor.addTransaction(transaction);
+        receiver.addTransaction(transaction);
+
+        transactionService.save(transaction);
+        vendorService.save(vendor);
+        receiverService.save(receiver);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/registerDonator", method=RequestMethod.POST, consumes="application/json")
+    @ResponseBody
+    public ResponseEntity registerDonator(@RequestBody String json) {
+        JSONObject object = new JSONObject(json);
+        String name = object.getString("name");
+        String email = object.getString("email");
+        String password = object.getString("password");
+
+        Donator donator = new Donator(name, email, password);
+        donatorService.save(donator);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/sendDonation", method=RequestMethod.POST, consumes="application/json")
+    @ResponseBody
+    public ResponseEntity sendDonation(@RequestBody String json) {
+        JSONObject object = new JSONObject(json);
+
+        Float amount = object.getFloat("amount");
+        Long donatorId = object.getLong("donator_id");
+        Long receiverId = object.getLong("receiver_id");
+
+        Donator donator = donatorService.findBy(donatorId);
+        Receiver receiver = receiverService.findBy(receiverId);
+
+        Donation donation = new Donation(amount, donator, receiver);
+        donator.addDonation(donation);
+        receiver.addDonation(donation);
+
+        donationService.save(donation);
+        donatorService.save(donator);
+        receiverService.save(receiver);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/getDonatorStats", method=RequestMethod.POST, consumes="application/json")
+    @ResponseBody
+    public ResponseEntity getDonatorStats(@RequestBody String json) {
+        JSONObject object = new JSONObject(json);
+        Long donatorId = object.getLong("donator_id");
+
+        Donator donator = donatorService.findBy(donatorId);
+        List<Donation> donations = donator.getDonations();
+
+        JSONObject out = new JSONObject();
+
+        JSONArray donationsArr = new JSONArray();
+        for (Donation donation : donations) {
+            JSONObject obj = new JSONObject();
+            obj.put("amount", donation.getAmount());
+            obj.put("timestamp", donation.getPrettyTimeStamp());
+
+            Receiver receiver = donation.getReceiver();
+            JSONObject receiverObj = new JSONObject();
+            receiverObj.put("id", receiver.getId());
+            receiverObj.put("name", receiver.getName());
+            obj.put("receiver", receiverObj);
+
+            donationsArr.put(obj);
+        }
+        out.put("donations", donationsArr);
+
+        return new ResponseEntity(out.toString(), HttpStatus.OK);
+    }
+
 }

@@ -19,4 +19,11 @@ public interface VendorService {
      * @return
      */
     List<Vendor> getAll();
+
+    /**
+     * find vendor by id
+     * @param id
+     * @return
+     */
+    Vendor findBy(Long id);
 }

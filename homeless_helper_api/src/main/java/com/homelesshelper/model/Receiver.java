@@ -1,6 +1,8 @@
 package com.homelesshelper.model;
 
 import org.hibernate.annotations.Type;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -113,11 +115,19 @@ public class Receiver {
         this.transactions = transactions;
     }
 
+    public void addTransaction(Transaction transaction) {
+        this.transactions.add(transaction);
+    }
+
     public List<Donation> getDonations() {
         return donations;
     }
 
     public void setDonations(List<Donation> donations) {
         this.donations = donations;
+    }
+
+    public void addDonation(Donation donation) {
+        donations.add(donation);
     }
 }
