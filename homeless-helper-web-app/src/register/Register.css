@@ -1,0 +1,32 @@
+.add-photo {
+	display: inline-block;
+	background-color: #c6c6c6;
+	width: 420px;
+	text-align: center;
+	height: 420px;
+	margin: 0;
+	float: left;
+}
+
+.form-title {
+	width: 150px;
+	display: inline-block;
+}
+
+.form-item {
+	margin-top: 5px;
+}
+
+.registration-form {
+    border: 1px solid lightgrey;
+}
+
+.registration-form-title {
+	border-bottom: 1px solid lightgrey;
+	padding: 20px;
+	background: #c9efe6;
+}
+
+.form-wrapper {
+    padding: 20px;
+}

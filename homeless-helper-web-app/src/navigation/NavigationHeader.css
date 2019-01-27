@@ -1,0 +1,26 @@
+.header {
+	width: 100%;
+	padding: 20px;
+	padding-left: 50px;
+	background: #c9efe6;
+}
+
+.nav-links-wrapper {
+	display: inline;
+	float: right;
+	margin-right: 100px;
+}
+
+.nav-link {
+	display: inline-block;
+	text-align: center;
+	width: 100px;
+}
+
+.nav-link:hover {
+	color: #a5c9c2;
+	-webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+}
+

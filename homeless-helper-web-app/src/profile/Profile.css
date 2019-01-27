@@ -1,0 +1,101 @@
+.summary-card-wrapper {
+	display: inline-block;
+	width: 23%;
+	float: left;
+}
+
+.summary-card-wrapper img {
+    display: block;
+	width: 100%;
+}
+
+.information {
+	height: 300px;
+	background-color: #c9efe6;
+	padding: 5px 30px;
+}
+
+.persons-name {
+	padding: 15px;
+	border-bottom: 1px solid black;
+	font-size: 20pt;
+	margin: 0;
+}
+
+.date-of-birth {
+   padding-left: 15px;
+}
+
+.summary-title {
+  padding-left: 15px;
+  text-decoration: underline;
+  font-weight: bold;
+  margin: 0;
+}
+
+.summary {
+  padding-left: 15px;
+  font-style: italic; 
+  margin: 0;
+}
+
+.credit-balance {
+	display: block;
+	border: 1px solid lightgray;
+	width: 95.3%;
+	height: 90px;
+	line-height: 90px;
+	padding: 0 30px;
+	background-color: white;
+	font-size: 25pt;
+}
+
+.credit-balance span {
+	display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+	color: black;
+}
+
+.credits {
+	float: right;
+	margin-top: 25px;
+	display: block;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+.table-wrapper {
+	margin-top: 40px;
+}
+
+.purchases {
+	width: 100%;
+	border-collapse: collapse ;
+	padding: 0 30px;
+	align-content: center;
+	table-layout: fixed;
+	border: 1px solid lightgrey;
+}
+
+th {
+	background-color: #c9efe6;
+}
+
+td {
+	width: 33%;
+	text-align: center;
+	background-color: white;
+	border-bottom: 1px dashed lightgrey;
+}
+
+th, td {
+    padding: 10px 0;
+}
+
+.right-wrapper {
+	display: inline-block;
+	width: 71%;
+	margin-left: 40px;
+}
+

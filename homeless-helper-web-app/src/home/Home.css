@@ -1,0 +1,41 @@
+.home-segment {
+   display: inline-block;
+   width: 33%;
+   height: 600px;
+   text-align: center;
+   padding-top: 100px;
+   margin-top: 50px;
+}
+
+.home-segment-border {
+   border-right: 1px solid lightgrey;
+}
+
+.segment-title {
+	font-size: 35px;
+	font-weight: lighter;
+	color: #7c7c7c;
+}
+
+.home-icon {
+	font-size: 100px;
+	color: #d1d6d4;
+	margin-bottom: 25px;
+}
+
+.nav-button {
+	display: inline-block;
+	border: 1px solid #32bc9a;
+	color: #32bc9a;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 10px;
+	margin: 20px;
+}
+
+.nav-button:hover {
+   background-color:  #32bc9a;
+   color: white;
+   transition: ease-in 0.1s;
+}
