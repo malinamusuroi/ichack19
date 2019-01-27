@@ -1,0 +1,35 @@
+.persons-name-only {
+	padding: 15px;
+	font-size: 20pt;
+	margin: 0;
+	background-color: #c9efe6;
+}
+
+.persons-name-only p {
+	border-bottom: 1px solid black;
+	margin: 0;
+}
+
+.new-item-entry-wrapper {
+	margin-top: 40px;
+    border: 1px solid lightgrey;
+}
+
+.new-item-entry-title {
+	border-bottom: 1px solid lightgrey;
+	padding: 20px;
+	background-color: #c9efe6;
+}
+
+.new-item-entry-form {
+    padding: 20px;
+}
+
+.form-title {
+    width: 100px;
+	display: inline-block;
+}
+
+.form-item {
+	margin-top: 5px;
+}
