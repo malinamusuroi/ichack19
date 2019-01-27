@@ -6,7 +6,10 @@ import { CreditBalance } from "./CreditBalance";
 import { PurchaseList } from "./PurchaseList";
 import { DonationsList } from "./DonationsList";
 
+var getProfileUrl = "https://homelesshelper.herokuapp.com/getFullReceiverInfoAndHistory"
+
 export class Profile extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,6 +20,23 @@ export class Profile extends Component {
 			transactions: [],
 			donations: []
 		};
+		this.setState = this.setState.bind(this);
+
+		// get profile info.
+		fetch(getProfileUrl.concat("/", this.props.userId))
+			.then(function (response) {
+				return response.json();
+			})
+			.then((response) => {
+				this.setState({
+					name: response["name"],
+					dob: response["dob"],
+					summary: response["summary"],
+					balance: response["balance"],
+					transactions: response["transactions"],
+					donations: response["donations"]
+				})
+			});
 	}
 
 	render() {

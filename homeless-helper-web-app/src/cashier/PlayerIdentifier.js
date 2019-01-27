@@ -7,7 +7,7 @@ export class PlayerIdentifier extends Component {
 		return (
 			<div class="summary-card-wrapper">
 				<img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" />
-				{personsName("Nuha Tumia")}
+				{personsName(this.props.name)}
 			</div>
 		)
 	}

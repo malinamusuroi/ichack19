@@ -17,7 +17,8 @@ class App extends Component {
 			    <Switch>
 					<Route exact path="/" component={Home} />
 					<Route path="/profile/:id" render={(props) => (<Profile userId={props.match.params.id} />)} />
-					<Route path="/cashier" component={Cashier} />
+					<Route exact path="/cashier" component={Cashier} />
+					<Route path="/cashier/:id" render={(props) => (<Cashier userId={props.match.params.id} />)} />
 					<Route path="/register" component={Register} />
 					<Route path="/pageNotFound" component={Error} />
 					<Redirect from="*" to="/pageNotFound" />

@@ -17,7 +17,9 @@ export class CreditBalance extends Component {
 function creditBalance(credits) {
 	return (
 		<span class="credits">
-			{(credits == -1) ? "Loading..." : parseFloat(credits)}
+			{(credits == -1) ? "Loading..." : ""}
+			{(isNaN(credits)) ? "--.--" : ""}
+			{(!isNaN(credits) && credits != -1) ? parseFloat(credits) : ""}
 		</span>	
 	);
 }
