@@ -84,11 +84,9 @@ public class WebController {
         return new ResponseEntity<>(out.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getFullReceiverInfoAndHistory", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getFullReceiverInfoAndHistory/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getFullReceiverInfoAndHistory(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getFullReceiverInfoAndHistory(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
