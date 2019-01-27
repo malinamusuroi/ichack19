@@ -6,6 +6,7 @@ export class QRCodeScanner extends Component {
   state = {
     hasCameraPermission: null,
     lastScannedUrl: null,
+    profileInfo: null,
   };
 
   componentDidMount() {
@@ -19,10 +20,25 @@ export class QRCodeScanner extends Component {
     });
   };
 
-  _handleBarCodeRead = result => {
+  _handleBarCodeRead = (result) => {
+    const {navigate} = this.props.navigation;
     if (result.data !== this.state.lastScannedUrl) {
-      LayoutAnimation.spring();
+      //LayoutAnimation.spring();
       this.setState({ lastScannedUrl: result.data });
+      //Linking.openURL(result.data);
+      fetch('http://146.169.147.110:3000/profile')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log("+++++++++++++++++++++++++++++");
+          console.log("+++++++++++++++++++++++++++++");
+          console.log("+++++++++++++++++++++++++++++");
+          console.log(responseJson);
+          this.setState({profileInfo: responseJson})
+          navigate('Donation', {})
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
@@ -37,7 +53,7 @@ export class QRCodeScanner extends Component {
                 </Text>
             : <BarCodeScanner
               onBarCodeRead={this._handleBarCodeRead}
-              style={{height: 270, width:  Dimensions.get('window').width}} />
+              style={{ height: 300, width: Dimensions.get('window').width }} />
         }
         {this._maybeRenderUrl()}
         <StatusBar hidden />
