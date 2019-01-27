@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image
 } from 'react-native';
 import { QRCodeScanner } from '../components/QRCodeScanner';
 
@@ -28,10 +29,12 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}> Thank you for helping! </Text>
+            <Text style={styles.getStartedText}> Every kind donation is appreciated! </Text>
           </View>
-          <View style={styles.bar}></View>    
           {this.scanrQRcode()}
+          <Image style={{width: 250, height: 250, alignSelf: 'center', marginTop: 30}}
+          source={require('../assets/images/logo.png')}/>
+          <Text style={styles.textC}> Start by scannying the QR code of the person you want to help </Text>
           <TouchableOpacity style={styles.button} onPress={this._handlePressUrl} title="Scan QR code">
             <Text>Scan QR code</Text>
           </TouchableOpacity>
@@ -42,9 +45,18 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  textC: {
+    fontSize: 17,
+    marginTop: 30,
+    marginLeft: 5,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 24,
+    textAlign: 'center',
+  },
   button: {
-    backgroundColor: 'rgb(197, 232, 237)',
-    marginTop: 100,
+    alignSelf: 'center',
+    backgroundColor: '#c9efe6',
+    marginTop: 60,
     textAlign: 'center',
     width: 200,
     height: 50,
@@ -58,12 +70,12 @@ const styles = StyleSheet.create({
   },
   bar: {
     backgroundColor: 'rgb(6, 18, 20)',
-    height: 2,
+    height: 1,
     marginTop: 5
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9fffd',
   },
   contentContainer: {
     paddingTop: 30,
