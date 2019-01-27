@@ -26,7 +26,7 @@ export class QRCodeScanner extends Component {
       //LayoutAnimation.spring();
       this.setState({ lastScannedUrl: result.data });
       //Linking.openURL(result.data);
-      fetch('http://146.169.147.110:3000/profile')
+      fetch('http://146.169.147.110:3000/people/1234')
         .then((response) => response.json())
         .then((responseJson) => {
           console.log("+++++++++++++++++++++++++++++");
@@ -34,7 +34,7 @@ export class QRCodeScanner extends Component {
           console.log("+++++++++++++++++++++++++++++");
           console.log(responseJson);
           this.setState({profileInfo: responseJson})
-          navigate('Donation', {})
+          navigate('Donation', {name: responseJson.name, info: responseJson.info, balance: responseJson.balance})
         })
         .catch((error) => {
           console.error(error);

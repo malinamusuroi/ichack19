@@ -11,7 +11,7 @@ export class ProfileCard extends React.Component {
     render() {
         return (
             <View>
-                <Card style={styles.card} title='John Doe'>
+                <Card style={styles.card} title={this.props.name}>
                     <View  style={styles.avatar}>
                         <Avatar
                             size="xlarge"
@@ -20,7 +20,7 @@ export class ProfileCard extends React.Component {
                             onPress={() => console.log("Works!")}
                             activeOpacity={0.7}
                             containerStyle={{ flex: 5, alignContent: 'center' }} />
-                        <Text style={styles.info}> Description: Lost home in fire </Text>
+                        <Text style={styles.info}> {this.props.info} </Text>
                     </View>
                 </Card>
             </View >

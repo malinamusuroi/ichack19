@@ -20,12 +20,16 @@ export default class DonationScreen extends React.Component {
       {cancelable: false},
       )
 
+    
+
   }
 
   render() {
+    const parameters = this.props.navigation.state.params;
+    console.log("Navigation Props");
     return (
       <ScrollView style={styles.container}>
-        <ProfileCard />
+        <ProfileCard name={parameters.name} info={parameters.info} balance={parameters.balance}/>
         <View>
           <NumericInput />
         </View>
