@@ -2,6 +2,14 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import { StackNavigator } from 'react-navigation';
+import HomeScreen from './screens/HomeScreen';
+import LinksScreen from './screens/LinksScreen';
+
+const Navigation = StackNavigator ({
+  Front: {screen: HomeScreen, navigationOptions:{header: null}},
+  Donation: {screen: LinksScreen},
+});
 
 export default class App extends React.Component {
   state = {
@@ -21,7 +29,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          <Navigation />
         </View>
       );
     }
