@@ -40,9 +40,12 @@ public class WebController {
         String summary = object.getString("summary");
 
         Receiver newReceiver = new Receiver(name, dobEpoch, summary);
-        receiverService.save(newReceiver);
+        newReceiver = receiverService.save(newReceiver);
 
-        return new ResponseEntity(HttpStatus.OK);
+        JSONObject obj = new JSONObject();
+        obj.put("id", newReceiver.getId());
+
+        return new ResponseEntity(obj.toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value="/updateReceiver", method=RequestMethod.POST, consumes="application/json")

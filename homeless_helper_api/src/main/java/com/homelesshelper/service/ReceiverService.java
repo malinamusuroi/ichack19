@@ -13,7 +13,7 @@ public interface ReceiverService {
      * save new receiver use to db
      * @param receiver
      */
-    void save(Receiver receiver);
+    Receiver save(Receiver receiver);
 
     /**
      * get all receivers in arraylist

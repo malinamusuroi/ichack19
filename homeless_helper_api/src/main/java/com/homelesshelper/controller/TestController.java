@@ -89,6 +89,7 @@ public class TestController {
                 transaction.put("amount", t.getAmount());
                 transaction.put("description", t.getDescription());
                 transaction.put("timestamp", t.getPrettyTimeStamp());
+                transaction.put("receiver", t.getReceiver().getName());
                 transactions.put(transaction);
             });
             obj.put("transactions", transactions);
