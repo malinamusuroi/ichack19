@@ -12,18 +12,18 @@ import {
 import { QRCodeScanner } from '../components/QRCodeScanner';
 
 export default class HomeScreen extends React.Component {
-   state ={
-     qrCodeScanner: false
-   }
+  state = {
+    qrCodeScanner: false
+  }
   _handlePressUrl = () => {
-    this.setState({qrCodeScanner: true});
+    this.setState({ qrCodeScanner: true });
   };
 
   scanrQRcode() {
-    if(this.state.qrCodeScanner) return <QRCodeScanner navigation={this.props.navigation}/>
+    if (this.state.qrCodeScanner) return <QRCodeScanner navigation={this.props.navigation} />
     else return
   }
-  
+
   render() {
 
     return (
@@ -33,8 +33,8 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.getStartedText}> Every kind donation is appreciated! </Text>
           </View>
           {this.scanrQRcode()}
-          <Image style={{width: 250, height: 250, alignSelf: 'center', marginTop: 30}}
-          source={require('../assets/images/logo.png')}/>
+          <Image style={{ width: 250, height: 250, alignSelf: 'center', marginTop: 30 }}
+            source={require('../assets/images/logo.png')} />
           <Text style={styles.textC}> Start by scannying the QR code of the person you want to help </Text>
           <TouchableOpacity style={styles.button} onPress={this._handlePressUrl} title="Scan QR code">
             <Text>Scan QR code</Text>

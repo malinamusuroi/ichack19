@@ -21,20 +21,16 @@ export class QRCodeScanner extends Component {
   };
 
   _handleBarCodeRead = (result) => {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     if (result.data !== this.state.lastScannedUrl) {
-      //LayoutAnimation.spring();
       this.setState({ lastScannedUrl: result.data });
       //Linking.openURL(result.data);
-      fetch('http://146.169.147.110:3000/people/1234')
+      fetch(result.data)
+        //fetch('https://homelesshelper.herokuapp.com/receiver/3')
         .then((response) => response.json())
         .then((responseJson) => {
-          console.log("+++++++++++++++++++++++++++++");
-          console.log("+++++++++++++++++++++++++++++");
-          console.log("+++++++++++++++++++++++++++++");
           console.log(responseJson);
-          this.setState({profileInfo: responseJson})
-          navigate('Donation', {name: responseJson.name, info: responseJson.info, balance: responseJson.balance})
+          navigate('Donation', { id: responseJson.id, name: responseJson.name, info: responseJson.info, balance: responseJson.balance, url: this.state.lastScannedUrl })
         })
         .catch((error) => {
           console.error(error);

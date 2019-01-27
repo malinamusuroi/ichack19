@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, TextInput, Button } from 'react-native';
 
 export class NumericInput extends React.Component {
 
@@ -19,8 +19,8 @@ export class NumericInput extends React.Component {
                     placeholderTextColor="grey"
                     numberOfLines={1}
                     value={this.state.amount}
-                    onChange={(text) => this.setState({amount: text})}
-                    >
+                    onChange={(text) => this.setState({ amount: text })}
+                >
                 </TextInput>
                 <TouchableOpacity style={styles.plusButton} onPress={this._add}>
                     <Text style={styles.text}> + </Text>
@@ -28,6 +28,7 @@ export class NumericInput extends React.Component {
             </View>
         )
     }
+
 
     _substract = () => {
         previousAmount = "" + (parseFloat(this.state.amount) - 1)
