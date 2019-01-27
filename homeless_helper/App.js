@@ -4,11 +4,11 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
-import LinksScreen from './screens/LinksScreen';
+import DonationScreen from './screens/DonationScreen';
 
 const Navigation = StackNavigator ({
   Front: {screen: HomeScreen, navigationOptions:{header: null}},
-  Donation: {screen: LinksScreen},
+  Donation: {screen: DonationScreen},
 });
 
 export default class App extends React.Component {
