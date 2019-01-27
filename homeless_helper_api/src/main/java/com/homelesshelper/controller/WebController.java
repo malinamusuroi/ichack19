@@ -186,6 +186,7 @@ public class WebController {
         Transaction transaction = new Transaction(amount, description, vendor, receiver);
         vendor.addTransaction(transaction);
         receiver.addTransaction(transaction);
+        receiver.decrementBalance(amount);
 
         transactionService.save(transaction);
         vendorService.save(vendor);
@@ -223,6 +224,7 @@ public class WebController {
         Donation donation = new Donation(amount, donator, receiver);
         donator.addDonation(donation);
         receiver.addDonation(donation);
+        receiver.incrementBalance(amount);
 
         donationService.save(donation);
         donatorService.save(donator);
