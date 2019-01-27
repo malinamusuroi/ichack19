@@ -1,6 +1,5 @@
 package com.homelesshelper.controller;
 
-import com.google.gson.Gson;
 import com.homelesshelper.model.*;
 import com.homelesshelper.service.*;
 import org.json.JSONArray;
