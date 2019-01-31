@@ -1,6 +1,5 @@
 package com.homelesshelper.controller;
 
-import com.google.gson.Gson;
 import com.homelesshelper.model.*;
 import com.homelesshelper.service.*;
 import org.json.JSONArray;
@@ -9,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class WebController {
 
     @Autowired
@@ -43,9 +40,12 @@ public class WebController {
         String summary = object.getString("summary");
 
         Receiver newReceiver = new Receiver(name, dobEpoch, summary);
-        receiverService.save(newReceiver);
+        newReceiver = receiverService.save(newReceiver);
 
-        return new ResponseEntity(HttpStatus.OK);
+        JSONObject obj = new JSONObject();
+        obj.put("id", newReceiver.getId());
+
+        return new ResponseEntity(obj.toString(), HttpStatus.OK);
     }
 
     @RequestMapping(value="/updateReceiver", method=RequestMethod.POST, consumes="application/json")
@@ -88,11 +88,9 @@ public class WebController {
         return new ResponseEntity<>(out.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getFullReceiverInfoAndHistory", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getFullReceiverInfoAndHistory/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getFullReceiverInfoAndHistory(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getFullReceiverInfoAndHistory(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -129,11 +127,9 @@ public class WebController {
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getCashierReceiverInfo", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getCashierReceiverInfo/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getCashierReceiverInfo(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getCashierReceiverInfo(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -148,11 +144,9 @@ public class WebController {
         return new ResponseEntity<>(obj.toString(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getBasicReceiverInfo", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getBasicReceiverInfo/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getBasicReceiverInfo(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long id = object.getLong("receiver_id");
+    public ResponseEntity getBasicReceiverInfo(@PathVariable(value = "id") Long id) {
 
         Receiver receiver = receiverService.findBy(id);
         if (receiver == null) {
@@ -195,6 +189,7 @@ public class WebController {
         Transaction transaction = new Transaction(amount, description, vendor, receiver);
         vendor.addTransaction(transaction);
         receiver.addTransaction(transaction);
+        receiver.decrementBalance(amount);
 
         transactionService.save(transaction);
         vendorService.save(vendor);
@@ -232,6 +227,7 @@ public class WebController {
         Donation donation = new Donation(amount, donator, receiver);
         donator.addDonation(donation);
         receiver.addDonation(donation);
+        receiver.incrementBalance(amount);
 
         donationService.save(donation);
         donatorService.save(donator);
@@ -240,11 +236,9 @@ public class WebController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value="/getDonatorStats", method=RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value="/getDonatorStats/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity getDonatorStats(@RequestBody String json) {
-        JSONObject object = new JSONObject(json);
-        Long donatorId = object.getLong("donator_id");
+    public ResponseEntity getDonatorStats(@PathVariable(value = "id") Long donatorId) {
 
         Donator donator = donatorService.findBy(donatorId);
         List<Donation> donations = donator.getDonations();

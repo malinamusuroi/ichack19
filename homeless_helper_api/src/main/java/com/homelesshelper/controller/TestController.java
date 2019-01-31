@@ -1,6 +1,5 @@
 package com.homelesshelper.controller;
 
-import com.google.gson.Gson;
 import com.homelesshelper.model.*;
 import com.homelesshelper.service.*;
 import org.json.JSONArray;
@@ -90,6 +89,7 @@ public class TestController {
                 transaction.put("amount", t.getAmount());
                 transaction.put("description", t.getDescription());
                 transaction.put("timestamp", t.getPrettyTimeStamp());
+                transaction.put("receiver", t.getReceiver().getName());
                 transactions.put(transaction);
             });
             obj.put("transactions", transactions);

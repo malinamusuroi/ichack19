@@ -107,6 +107,14 @@ public class Receiver {
         this.balance = balance;
     }
 
+    public void incrementBalance(Float amount) {
+        balance += amount;
+    }
+
+    public void decrementBalance(Float amount) {
+        balance -= amount;
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
